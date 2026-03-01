@@ -195,9 +195,7 @@ footer p{margin:.3rem 0;font-size:.95rem}
   <p style="margin-top:1.5rem;font-size:.8rem;opacity:.5">© 2026 Nail Studio</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-emailjs.init('m_0snqgBIJ_6zO1kW');
 // Burger menu
 const burger = document.getElementById('burger');
 const navLinks = document.getElementById('navLinks');
@@ -227,12 +225,12 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
   const btn = this.querySelector('button[type="submit"]');
   btn.disabled = true;
   btn.textContent = 'Отправка...';
-  emailjs.send('service_tbyuq8a', 'template_hoeooan', {
-    name: data.name,
-    phone: data.phone,
-    date: data.date,
-    service: data.service
-  }).then(() => {
+  const text = `📋 Новая запись!\n\n👤 Имя: ${data.name}\n📞 Телефон: ${data.phone}\n📅 Дата: ${data.date}\n💅 Услуга: ${data.service}`;
+  fetch('https://api.telegram.org/bot8639718495:AAFg84bgniTK_EFF_9WbCyaVLyRNoqoJP-8/sendMessage', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: 1450497557, text })
+  }).then(r => r.json()).then(r => { if (!r.ok) throw r; }).then(() => {
     const bookings = JSON.parse(localStorage.getItem('nailBookings') || '[]');
     bookings.push({ ...data, created: new Date().toISOString() });
     localStorage.setItem('nailBookings', JSON.stringify(bookings));
