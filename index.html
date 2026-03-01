@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nail Studio — Студия маникюра</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -187,9 +188,9 @@ footer p{margin:.3rem 0;font-size:.95rem}
   <p>📞 +7 (999) 123-45-67</p>
   <p>🕐 Пн–Сб: 10:00–20:00</p>
   <div class="socials">
-    <a href="#" aria-label="Instagram">IG</a>
-    <a href="#" aria-label="Telegram">TG</a>
-    <a href="#" aria-label="WhatsApp">WA</a>
+    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="#" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
   </div>
   <p style="margin-top:1.5rem;font-size:.8rem;opacity:.5">© 2026 Nail Studio</p>
 </footer>
@@ -226,7 +227,7 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
   const btn = this.querySelector('button[type="submit"]');
   btn.disabled = true;
   btn.textContent = 'Отправка...';
-  emailjs.send('service_tbyuq8a', 'template_yafjp5u', {
+  emailjs.send('service_tbyuq8a', 'template_hoeooan', {
     name: data.name,
     phone: data.phone,
     date: data.date,
