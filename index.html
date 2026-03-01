@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nail Studio — Студия маникюра</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--pink:#e8a0bf;--pink-light:#fce4ec;--pink-dark:#c2185b;--rose:#f8bbd0;--white:#fff;--dark:#2d2d2d;--gray:#666;--shadow:0 4px 20px rgba(0,0,0,.08);--radius:16px}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--dark);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:'Montserrat',sans-serif}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);z-index:100;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.nav__logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--pink-dark)}
+.nav__links{display:flex;gap:1.5rem;list-style:none}
+.nav__links a{font-size:.9rem;font-weight:500;transition:color .2s}
+.nav__links a:hover{color:var(--pink-dark)}
+.nav__burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+.nav__burger span{width:24px;height:2px;background:var(--dark);transition:.3s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,var(--pink-light) 0%,var(--rose) 50%,var(--pink) 100%);padding:6rem 2rem 4rem}
+.hero h1{font-size:clamp(2rem,6vw,4rem);margin-bottom:1rem;color:var(--dark)}
+.hero p{font-size:1.15rem;color:var(--gray);max-width:540px;margin:0 auto 2rem}
+.btn{display:inline-block;padding:.9rem 2.4rem;border-radius:50px;font-weight:600;font-size:1rem;border:none;cursor:pointer;transition:all .25s}
+.btn--primary{background:var(--pink-dark);color:var(--white)}
+.btn--primary:hover{background:#ad1457;transform:translateY(-2px);box-shadow:0 6px 20px rgba(194,24,91,.3)}
+
+/* SECTIONS */
+section{padding:5rem 2rem}
+.section-title{text-align:center;font-size:clamp(1.5rem,4vw,2.2rem);margin-bottom:3rem;position:relative}
+.section-title::after{content:'';display:block;width:60px;height:3px;background:var(--pink);margin:12px auto 0;border-radius:2px}
+
+/* ABOUT */
+.about{background:var(--white)}
+.about__content{max-width:720px;margin:0 auto;text-align:center;color:var(--gray);font-size:1.05rem}
+
+/* PORTFOLIO */
+.portfolio{background:var(--pink-light)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;max-width:1100px;margin:0 auto}
+.gallery__item{border-radius:var(--radius);overflow:hidden;cursor:pointer;position:relative;aspect-ratio:1;background:var(--rose)}
+.gallery__item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.gallery__item:hover img{transform:scale(1.05)}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:none;align-items:center;justify-content:center;padding:2rem}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90vw;max-height:85vh;border-radius:var(--radius)}
+.lightbox__close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer}
+
+/* PRICE */
+.price{background:var(--white)}
+.price-table{max-width:700px;margin:0 auto;border-collapse:collapse;width:100%}
+.price-table tr{border-bottom:1px solid #eee}
+.price-table td{padding:1rem;font-size:1rem}
+.price-table td:last-child{text-align:right;font-weight:600;color:var(--pink-dark);white-space:nowrap}
+.price-table tr:hover{background:var(--pink-light)}
+
+/* BOOKING */
+.booking{background:var(--pink-light)}
+.booking-form{max-width:500px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+.booking-form input,.booking-form select{padding:.85rem 1.2rem;border:1px solid #ddd;border-radius:var(--radius);font-size:1rem;font-family:inherit;outline:none;transition:border .2s}
+.booking-form input:focus,.booking-form select:focus{border-color:var(--pink-dark)}
+.booking-form .btn{align-self:center;width:100%}
+.booking__msg{text-align:center;margin-top:1rem;font-weight:600;color:var(--pink-dark);display:none}
+
+/* FOOTER */
+footer{background:var(--dark);color:rgba(255,255,255,.8);text-align:center;padding:3rem 2rem}
+footer h3{color:var(--pink);margin-bottom:1rem}
+footer p{margin:.3rem 0;font-size:.95rem}
+.socials{display:flex;justify-content:center;gap:1rem;margin-top:1.2rem}
+.socials a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;transition:background .2s}
+.socials a:hover{background:var(--pink-dark)}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:none}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav__links{position:fixed;top:64px;left:0;right:0;background:var(--white);flex-direction:column;align-items:center;padding:1.5rem 0;gap:1.2rem;transform:translateY(-120%);transition:transform .3s;box-shadow:var(--shadow)}
+  .nav__links.open{transform:translateY(0)}
+  .nav__burger{display:flex}
+  section{padding:3.5rem 1.2rem}
+  .gallery{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav__logo">Nail Studio</a>
+  <ul class="nav__links" id="navLinks">
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#portfolio">Портфолио</a></li>
+    <li><a href="#price">Прайс-лист</a></li>
+    <li><a href="#booking">Запись</a></li>
+    <li><a href="#contacts">Контакты</a></li>
+  </ul>
+  <button class="nav__burger" id="burger" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div>
+    <h1>Идеальный маникюр<br>для&nbsp;вас</h1>
+    <p>Профессиональный уход за ногтями в уютной атмосфере. Качество, стиль и внимание к каждой детали.</p>
+    <a href="#booking" class="btn btn--primary">Записаться</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <h2 class="section-title reveal">О нас</h2>
+  <div class="about__content reveal">
+    <p>Мы — студия маникюра и педикюра с многолетним опытом. Наши мастера регулярно проходят обучение и используют только премиальные материалы. Каждый клиент для нас — особенный, и мы создаём дизайн, который подчёркивает вашу индивидуальность.</p>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <h2 class="section-title reveal">Портфолио</h2>
+  <div class="gallery reveal">
+    <div class="gallery__item"><img src="https://picsum.photos/seed/nail1/600/600" alt="Маникюр 1"></div>
+    <div class="gallery__item"><img src="https://picsum.photos/seed/nail2/600/600" alt="Маникюр 2"></div>
+    <div class="gallery__item"><img src="https://picsum.photos/seed/nail3/600/600" alt="Маникюр 3"></div>
+    <div class="gallery__item"><img src="https://picsum.photos/seed/nail4/600/600" alt="Маникюр 4"></div>
+    <div class="gallery__item"><img src="https://picsum.photos/seed/nail5/600/600" alt="Маникюр 5"></div>
+    <div class="gallery__item"><img src="https://picsum.photos/seed/nail6/600/600" alt="Маникюр 6"></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox__close" id="lbClose">&times;</button>
+  <img src="" alt="" id="lbImg">
+</div>
+
+<!-- PRICE -->
+<section class="price" id="price">
+  <h2 class="section-title reveal">Прайс-лист</h2>
+  <table class="price-table reveal">
+    <tr><td>Маникюр классический</td><td>1 500 ₽</td></tr>
+    <tr><td>Маникюр с покрытием гель-лак</td><td>2 500 ₽</td></tr>
+    <tr><td>Педикюр классический</td><td>2 000 ₽</td></tr>
+    <tr><td>Педикюр с покрытием</td><td>3 000 ₽</td></tr>
+    <tr><td>Наращивание ногтей</td><td>4 500 ₽</td></tr>
+    <tr><td>Дизайн (1 ноготь)</td><td>от 100 ₽</td></tr>
+    <tr><td>Снятие гель-лака</td><td>500 ₽</td></tr>
+    <tr><td>Ремонт ногтя</td><td>300 ₽</td></tr>
+  </table>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <h2 class="section-title reveal">Онлайн-запись</h2>
+  <form class="booking-form reveal" id="bookingForm">
+    <input type="text" name="name" placeholder="Ваше имя" required>
+    <input type="tel" name="phone" placeholder="Телефон" required>
+    <input type="date" name="date" required>
+    <select name="service" required>
+      <option value="" disabled selected>Выберите услугу</option>
+      <option>Маникюр классический</option>
+      <option>Маникюр с покрытием гель-лак</option>
+      <option>Педикюр классический</option>
+      <option>Педикюр с покрытием</option>
+      <option>Наращивание ногтей</option>
+      <option>Дизайн</option>
+    </select>
+    <button type="submit" class="btn btn--primary">Записаться</button>
+  </form>
+  <p class="booking__msg" id="bookingMsg">Спасибо! Ваша запись принята ✓</p>
+</section>
+
+<!-- FOOTER -->
+<footer id="contacts">
+  <h3>Контакты</h3>
+  <p>📍 г. Москва, ул. Примерная, д. 10</p>
+  <p>📞 +7 (999) 123-45-67</p>
+  <p>🕐 Пн–Сб: 10:00–20:00</p>
+  <div class="socials">
+    <a href="#" aria-label="Instagram">IG</a>
+    <a href="#" aria-label="Telegram">TG</a>
+    <a href="#" aria-label="WhatsApp">WA</a>
+  </div>
+  <p style="margin-top:1.5rem;font-size:.8rem;opacity:.5">© 2026 Nail Studio</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+emailjs.init('m_0snqgBIJ_6zO1kW');
+// Burger menu
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('navLinks');
+burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.15 });
+reveals.forEach(el => observer.observe(el));
+
+// Lightbox
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+document.querySelectorAll('.gallery__item img').forEach(img => {
+  img.addEventListener('click', () => { lbImg.src = img.src; lightbox.classList.add('active'); });
+});
+document.getElementById('lbClose').addEventListener('click', () => lightbox.classList.remove('active'));
+lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+
+// Booking form
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(this));
+  const btn = this.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Отправка...';
+  emailjs.send('service_tbyuq8a', 'template_yafjp5u', {
+    name: data.name,
+    phone: data.phone,
+    date: data.date,
+    service: data.service
+  }).then(() => {
+    const bookings = JSON.parse(localStorage.getItem('nailBookings') || '[]');
+    bookings.push({ ...data, created: new Date().toISOString() });
+    localStorage.setItem('nailBookings', JSON.stringify(bookings));
+    this.reset();
+    const msg = document.getElementById('bookingMsg');
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 4000);
+  }).catch(() => {
+    alert('Ошибка отправки. Попробуйте позже.');
+  }).finally(() => {
+    btn.disabled = false;
+    btn.textContent = 'Записаться';
+  });
+});
+
+// Set min date to today
+document.querySelector('input[type="date"]').min = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
